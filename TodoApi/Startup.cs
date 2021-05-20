@@ -27,6 +27,7 @@ namespace TodoApi
 			
 			services.AddScoped<ITodoItemService, TodoItemService>();
 
+			services.AddCors();
 			services.AddControllers();
 			services.AddSwaggerGen(c =>
 			{
@@ -47,6 +48,13 @@ namespace TodoApi
 			app.UseHttpsRedirection();
 
 			app.UseRouting();
+
+			// global cors policy
+			app.UseCors(x => x
+				.AllowAnyMethod()
+				.AllowAnyHeader()
+				.SetIsOriginAllowed(origin => true) // allow any origin
+				.AllowCredentials()); // allow credentials
 
 			app.UseAuthorization();
 
